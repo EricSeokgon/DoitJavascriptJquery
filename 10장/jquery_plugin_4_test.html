@@ -6,29 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
         $(function () {
-                    $(".slide_gallery").bxSlider({
-                            auto:true,
-                            autoControls:true,
-                            stopAutoOnClick:true,
-                            pager:true
-                        });
+            if($.cookie("popup") == "none") {
+                $("#notice_wrap").hide();
+            }
+            var $expChk = $("#expiresChk");
+            $(".closeBtn").on("click", closePop);
+
+            function closePop() {
+                if ($expChk.is(":checked")) {
+                    $.cookie("popup", "none", {
+                        expires: 3,
+                        path: "/"
                     });
+                }
+                $("#notice_wrap").fadeOut("fase");
+            }
+        });
     </script>
 </head>
 
 <body>
-    <div id="gallery_wrap">
-        <ul class="slide_gallery">
-          <li><img src="1.jpg" alt="사진1"></li>
-          <li><img src="2.jpg" alt="사진2"></li>
-          <li><img src="3.jpg" alt="사진3"></li>
-        </ul>
+    <div id="notice_wrap">
+        <img src="2.jpg" alt="단풍">
+        <p class="closeWrap">
+            <input type="checkbox" name="expiresChk" id="expiresChk">
+            <label for="expiresChk">3일 동안 이창 열지 않기</label>
+            <button class="closeBtn">닫기</button>
+        </p>        
     </div>
 </body>
 
